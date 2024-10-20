@@ -1,21 +1,8 @@
 import { PrismaClient } from '@prisma/client'
 
 const prismaClientSingleton = () => {
-  const prisma = new PrismaClient();
-
-  // Middleware para validar e-mail
-  prisma.$use(async (params, next) => {
-    if (params.model === 'User' && (params.action === 'create' || params.action === 'update')) {
-      const email = params.args.data.email;
-      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        throw new Error('Invalid email format');
-      }
-    }
-    return next(params);
-  });
-
-  return prisma;
-};
+  return new PrismaClient()
+}
 
 declare const globalThis: {
   prismaGlobal: ReturnType<typeof prismaClientSingleton>;

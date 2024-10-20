@@ -1,0 +1,74 @@
+{
+  "db": {
+    "user": {
+      "user": {
+        "id": "string",
+        "nome": "string",
+        "email": "string",
+        "senha": "string",
+        "isAdmin": "boolean"
+      },
+      "endereco": {
+        "id": "string",
+        "logradouro": "string",
+        "numero": "string",
+        "bairro": "string",
+        "cidade": "string",
+        "estado": "string",
+        "cep": "string"
+      }
+    },
+    "produto": {
+      "produto": {
+        "id": "string",
+        "nome": "string",
+        "descricao": "string",
+        "preco": "number"
+      },
+      "categoria": {
+        "id": "string",
+        "nome": "string"
+      },
+      "estoque": {
+        "produtoId": "string",
+        "quantidade": "number"
+      },
+      "pedido": {
+        "id": "string",
+        "userId": "string",
+        "dataPedido": "Date",
+        "status": "string"
+      },
+      "pedido_produto": {
+        "pedidoId": "string",
+        "produtoId": "string",
+        "quantidade": "number",
+        "preco": "number"
+      },
+      "avaliacao": {
+        "id": "string",
+        "produtoId": "string",
+        "userId": "string",
+        "rating": "number",
+        "comentario": "string"
+      },
+      "historico": {
+        "id": "string",
+        "produtoId": "string",
+        "alteracao": "string",
+        "dataAlteracao": "Date"
+      }
+    },
+    "pagamento": {
+      "pagamento": {
+        "id": "string",
+        "pedidoId": "string",
+        "userId": "string",
+        "metodo": "string",
+        "status": "string",
+        "valor": "number",
+        "dataPagamento": "Date"
+      }
+    }
+  }
+}

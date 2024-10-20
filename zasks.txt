@@ -1,0 +1,22 @@
+// fazer router e validation;
+// melhora estrutura de pasta;
+// melhora o banco "vai ser uma loja entao"
+{ db:{
+        user:{
+            user
+            endereco
+        }
+        produto:{
+            produto
+            categoria
+            estoque
+            pedido
+            pedido_produto
+            avaliacao
+            historico
+        }
+        pagamento:{
+            pagamento
+        }
+    }
+}

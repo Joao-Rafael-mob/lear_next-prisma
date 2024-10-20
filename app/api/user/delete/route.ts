@@ -2,7 +2,7 @@ import prisma from "../../../lib/prisma";
 import { NextResponse } from "next/server";
 import { validateGet } from "../../validations/user/validateGet";
 
-export async function GET(req: Request) {
+export async function DELETE(req: Request) {
     const { searchParams } = new URL(req.url)
     const email = searchParams.get('email')
     const validationErrors = validateGet(email);
@@ -13,7 +13,7 @@ export async function GET(req: Request) {
     }
 
     try {
-        const result = await prisma.user.findUnique({
+        const result = await prisma.user.delete({
             where: {
                 email,
             },

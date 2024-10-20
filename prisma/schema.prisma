@@ -8,17 +8,101 @@ datasource db {
 }
 
 model User {
-  id      Int     @id @default(autoincrement())
+  id      Int       @id @default(autoincrement())
   name    String
-  email   String  @unique
+  email   String    @unique
   senha   String
-  isAdmin Role?   @default(USER)
+  isAdmin Role      @default(USER)
+  address Address?
+  orders  Order[]
+  reviews Review[]
+  Payment Payment[]
+}
+
+model Address {
+  id         Int     @id @default(autoincrement())
+  userId     Int     @unique
+  user       User    @relation(fields: [userId], references: [id])
+  number     String?
+  district   String?
+  city       String?
+  state      String?
+  postalCode String?
 }
 
 model Product {
-  id    Int    @id @default(autoincrement())
-  name  String
-  price Float
+  id           Int           @id @default(autoincrement())
+  name         String
+  description  String?
+  price        Float?
+  stock        Stock?
+  categories   Category[]    @relation("ProductCategories")
+  reviews      Review[]
+  orderProduct OrderProduct[]
+  History      History[]
+}
+
+model Category {
+  id       String    @id @default(uuid())
+  name     String
+  products Product[] @relation("ProductCategories")
+}
+
+model Stock {
+  productId Int     @unique
+  quantity  Int?
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+model Order {
+  id        String         @id @default(uuid())
+  userId    Int
+  user      User?          @relation(fields: [userId], references: [id])
+  orderDate DateTime?
+  status    String?
+  products  OrderProduct[]
+  payments  Payment[]
+}
+
+model OrderProduct {
+  orderId   String
+  productId Int
+  quantity  Int?
+  price     Float?
+  order     Order?   @relation(fields: [orderId], references: [id])
+  product   Product? @relation(fields: [productId], references: [id])
+
+  @@id([orderId, productId])
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  productId Int
+  userId    Int
+  rating    Float?
+  comment   String?
+  product   Product @relation(fields: [productId], references: [id])
+  user      User    @relation(fields: [userId], references: [id])
+}
+
+model History {
+  id         String    @id @default(uuid())
+  productId  Int?
+  change     String?
+  changeDate DateTime?
+  product    Product?  @relation(fields: [productId], references: [id])
+}
+
+model Payment {
+  id          String    @id @default(uuid())
+  orderId     String?
+  userId      Int?
+  method      String?
+  status      String?
+  amount      Float?
+  paymentDate DateTime?
+  order       Order?    @relation(fields: [orderId], references: [id])
+  user        User?     @relation(fields: [userId], references: [id])
 }
 
 enum Role {
