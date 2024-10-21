@@ -32,9 +32,10 @@ model Address {
 
 model Product {
   id           Int           @id @default(autoincrement())
-  name         String
+  name         String? 
   description  String?
   price        Float?
+  imageUrl     String?       
   stock        Stock?
   categories   Category[]    @relation("ProductCategories")
   reviews      Review[]
