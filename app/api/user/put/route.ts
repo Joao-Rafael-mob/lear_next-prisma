@@ -1,20 +1,15 @@
 import { NextResponse } from "next/server";
-import prisma from "../../../lib/prisma";
+import prisma from "../../../libs/prisma";
 import bcrypt from 'bcryptjs';
+import { User } from "../../modal/User";
 import { validatePut } from "../../validations/user/validatePut";
 
 export async function PUT(req: Request) {
-    let { id, name, email, senha, isAdmin } = await req.json();
-
-    const validationErrors = validatePut(id, name, email, senha);
-
-    if (Object.keys(validationErrors).length > 0) {
-        console.error('Erros de validação:', validationErrors);
-        return NextResponse.json({ message: Object.values(validationErrors).join(' ') }, { status: 400 });
-    }
-    const hashedSenha = await bcrypt.hash(senha, 10);
+    let { id, name, email, senha, isAdmin }: User = await req.json();
 
     try {
+        validatePut(id, name, email, senha)
+
         const result = await prisma.user.update({
             where: {
                 id,
@@ -22,13 +17,22 @@ export async function PUT(req: Request) {
             data: {
                 name,
                 email,
-                senha: hashedSenha,
+                senha: senha ? await bcrypt.hash(senha, 10) : senha,
                 isAdmin,
             }
         });
+
+        if (!result) {
+            return NextResponse.json({ message: 'Usuário não encontrado' }, { status: 404 });
+        }
         return NextResponse.json(result, { status: 200 });
     } catch (error) {
-        console.error('Erro ao atualizar usuário:', error);
-        return NextResponse.json({ message: 'Erro ao atualizar usuário' }, { status: 500 });
+    if (error instanceof Error) {
+        console.error('Erro ao atualizar usuário:', error.message);
+        return NextResponse.json({ message: error.message }, { status: 400 });
+    } else {
+        console.error('Erro inesperado ao atualizar usuário:', error);
+        return NextResponse.json({ message: 'Erro inesperado ao atualizar usuário' }, { status: 500 });
+    }
     }
 }

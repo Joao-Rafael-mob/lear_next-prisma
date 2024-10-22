@@ -4,10 +4,11 @@ import { Review } from "./Review"
 import { Stock } from "./Stock"
 
 export interface Product {
+    id: number;
     name?: string;
     description?: string;
     price?: number;
-    imageUrl?: String;
+    imageUrl?: string;
     stock: Stock;
     categories: Category[];
     reviews: Review[];

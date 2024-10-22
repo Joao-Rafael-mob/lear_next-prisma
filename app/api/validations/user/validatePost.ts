@@ -1,21 +1,23 @@
-import prisma from "../../../lib/prisma";
-import { fieldValueString } from "../global/fieldValue";
+import { fieldValueEmailBoolean, fieldValueString } from "../global/fieldValue";
 
-interface ValidationErrors {
-    name?: string;
-    email?: string;
-    senha?: string;
-    emailFormat?: string;
-}
+export function validatePost(
+    name?: any,
+    email?: string,
+    senha?: any
+): void {
+    try {
 
-export function validatePost(name: any, email: string, senha: any): ValidationErrors {
-    const errors: Record<string, string> = {};
+        fieldValueString(name, 'nome');
 
-    fieldValueString(name, 'nome', errors);
+        fieldValueString(email, 'email');
 
-    fieldValueString(email, 'email', errors);
+        fieldValueString(senha, 'senha');
 
-    fieldValueString(senha, 'senha', errors)
-  
-    return errors;
+        fieldValueEmailBoolean(email, 'email');
+    } catch (error) {
+        throw new Error(`Erro de validação: ${error.message}`);
+
+    }
+
+
 }

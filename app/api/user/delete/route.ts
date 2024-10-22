@@ -1,18 +1,15 @@
-import prisma from "../../../lib/prisma";
+import prisma from "../../../libs/prisma";
 import { NextResponse } from "next/server";
 import { validateGet } from "../../validations/user/validateGet";
+import { validateDelete } from "../../validations/user/validateDelete";
 
 export async function DELETE(req: Request) {
     const { searchParams } = new URL(req.url)
     const email = searchParams.get('email')
-    const validationErrors = validateGet(email);
-
-    if (Object.keys(validationErrors).length > 0) {
-        console.error('Erros de validação:', validationErrors);
-        return NextResponse.json({ message: Object.values(validationErrors).join(' ') }, { status: 400 });
-    }
 
     try {
+        validateDelete(email);
+
         const result = await prisma.user.delete({
             where: {
                 email,
@@ -23,7 +20,12 @@ export async function DELETE(req: Request) {
         }
         return NextResponse.json(result, { status: 200 });
     } catch (error) {
-        console.error('Erro ao processar requisição:');
-        return NextResponse.json({ message: 'Erro ao processar requisição' }, { status: 500 });
+        if (error instanceof Error) {
+            console.error('Erro ao atualizar usuário:', error.message);
+            return NextResponse.json({ message: error.message }, { status: 400 });
+        } else {
+            console.error('Erro inesperado ao atualizar usuário:', error);
+            return NextResponse.json({ message: 'Erro inesperado ao atualizar usuário' }, { status: 500 });
+        }
     }
 }

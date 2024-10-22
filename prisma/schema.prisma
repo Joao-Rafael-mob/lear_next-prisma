@@ -61,7 +61,7 @@ model Order {
   user      User?          @relation(fields: [userId], references: [id])
   orderDate DateTime?
   status    String?
-  products  OrderProduct[]
+  orderProduct  OrderProduct[]
   payments  Payment[]
 }
 

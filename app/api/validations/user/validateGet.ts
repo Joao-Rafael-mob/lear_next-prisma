@@ -1,13 +1,16 @@
-import { fieldValueString } from "../global/fieldValue";
+import { fieldValueEmailBoolean, fieldValueString } from "../global/fieldValue";
 
-interface ValidationErrors {
-    email?: string;
-}
+export function validateGet(
+    email: string
+): void {
+    try {
 
-export function validateGet(email: string): ValidationErrors{
-    const errors: Record<string, string> = {};
+        fieldValueString(email, 'email');
 
-    fieldValueString(email, 'email', errors)
+        fieldValueEmailBoolean(email, 'email');
+    } catch (error) {
+        throw new Error(`Erro de validação: ${error.message}`);
 
-    return errors;
+    }
+
 }
