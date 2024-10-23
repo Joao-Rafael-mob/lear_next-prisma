@@ -1,8 +1,8 @@
-import prisma from '../../../libs/prisma';
+import prisma from '../../../../libs/prisma';
 import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
-import { validatePost } from '../../validations/user/validatePost';
-import { User } from '../../modal/User';
+import { validatePost } from '../../../validations/user/validatePost';
+import { User } from '../../../modal/User';
 
 export async function POST(req: Request) {
 
@@ -34,11 +34,11 @@ export async function POST(req: Request) {
         return NextResponse.json(result, { status: 201 });
     } catch (error) {
         if (error instanceof Error) {
-            console.error('Erro ao atualizar usuário:', error.message);
+            console.error('Erro ao cadastra usuário:', error.message);
             return NextResponse.json({ message: error.message }, { status: 400 });
         } else {
-            console.error('Erro inesperado ao atualizar usuário:', error);
-            return NextResponse.json({ message: 'Erro inesperado ao atualizar usuário' }, { status: 500 });
+            console.error('Erro inesperado ao cadastra usuário:', error);
+            return NextResponse.json({ message: 'Erro inesperado ao cadastra usuário' }, { status: 500 });
         }
     }
 }

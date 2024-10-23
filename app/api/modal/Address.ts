@@ -1,6 +1,6 @@
 export interface Address {
   id: number;
-  userId: number;
+  userId?: number;
   number?: string;
   district?: string;
   city?: string;

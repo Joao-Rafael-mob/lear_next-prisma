@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import prisma from "../../../libs/prisma";
+import prisma from "../../../../libs/prisma";
 import bcrypt from 'bcryptjs';
-import { User } from "../../modal/User";
-import { validatePut } from "../../validations/user/validatePut";
+import { User } from "../../../modal/User";
+import { validatePut } from "../../../validations/user/validatePut";
 
 export async function PUT(req: Request) {
     let { id, name, email, senha, isAdmin }: User = await req.json();

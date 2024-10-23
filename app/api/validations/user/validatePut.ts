@@ -1,11 +1,7 @@
 import { fieldValueString, fieldValueNumber, fieldValueEmailBoolean } from "../global/fieldValue";
 
 export function validatePut(
-    id: number,
-    name?: string,
-    email?: string,
-    senha?: string
-): void {
+id: number, name?: string, email?: string, senha?: string, stockQuantity?: number): void {
     try {
 
         fieldValueNumber(id, 'id');

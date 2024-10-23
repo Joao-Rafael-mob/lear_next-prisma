@@ -1,6 +1,8 @@
 // fazer router e validation;
 // melhora estrutura de pasta;
 // melhora o banco "vai ser uma loja entao"
+
+// os deletes vao ser updata pra muda de ativo pra desativado
 { db:{
         user:{
             user

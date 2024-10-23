@@ -1,6 +1,6 @@
-import prisma from "../../../libs/prisma";
+import prisma from "../../../../libs/prisma";
 import { NextResponse } from "next/server";
-import { validateGet } from "../../validations/user/validateGet";
+import { validateGet } from "../../../validations/user/validateGet";
 
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url)
@@ -30,11 +30,11 @@ export async function GET(req: Request) {
         return NextResponse.json(result, { status: 200 });
     } catch (error) {
         if (error instanceof Error) {
-            console.error('Erro ao atualizar usuário:', error.message);
+            console.error('Erro ao obter usuário:', error.message);
             return NextResponse.json({ message: error.message }, { status: 400 });
         } else {
-            console.error('Erro inesperado ao atualizar usuário:', error);
-            return NextResponse.json({ message: 'Erro inesperado ao atualizar usuário' }, { status: 500 });
+            console.error('Erro inesperado ao obter usuário:', error);
+            return NextResponse.json({ message: 'Erro inesperado ao obter usuário' }, { status: 500 });
         }
     }
 }
